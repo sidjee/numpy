@@ -571,7 +571,12 @@ NumPyOS_ascii_strtold(const char *s, char** endptr)
         result = strtold_l(s, endptr, clocale);
         freelocale(clocale);
         if (errno) {
-            *endptr = (char*)s;
+            if(!*endptr){
+                result = NPY_INFINITY;
+            }
+            else{
+                *endptr = (char*)s;
+            }
         }
     }
     else {
